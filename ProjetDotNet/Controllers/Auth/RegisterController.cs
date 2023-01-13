@@ -28,6 +28,7 @@ namespace ProjetDotNet.Controllers.Auth
 
             UnitOfWork unitOfWork = new UnitOfWork(AppDbContext.Instance);
             unitOfWork.Users.Add(user);
+            unitOfWork.Complete();
 
             return RedirectToAction("", "Login");
         }

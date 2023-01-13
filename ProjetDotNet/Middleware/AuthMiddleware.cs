@@ -14,8 +14,7 @@ namespace ProjetDotNet.Middlewares
         private readonly RequestDelegate _next;
         private readonly string[] AuthRoutes = { 
             "/post/create",
-            "/post/reply",
-            "/post/"
+            "/reply/create",
         };
 
         public AuthMiddleware(RequestDelegate next)

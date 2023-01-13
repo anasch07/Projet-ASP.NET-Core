@@ -1,0 +1,22 @@
+﻿@model ProjetDotNet.Models.Post
+
+Reply
+@using (Html.BeginForm("CreateReply", "reply", FormMethod.Post))
+{
+    <table cellpadding="2" cellspacing="2">
+        <tr>
+            <td>Content</td>
+            <td>
+                <textarea name="content"></textarea>
+            </td>
+            <input name="postId" type="hidden" value="@Model.Id" />
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td>
+                <input type="submit" value="Reply" />
+            </td>
+        </tr>
+        @Html.AntiForgeryToken()
+    </table>
+}

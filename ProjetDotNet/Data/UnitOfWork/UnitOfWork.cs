@@ -7,6 +7,7 @@ public class UnitOfWork : IUnitOfWork
     private readonly AppDbContext _applicationDbContext;
     public IUserRepository Users { get; private set; }
     public IPostRepository Posts { get; private set; }
+    public IReplyRepository Replies { get; private set; }
 
 
     public UnitOfWork(AppDbContext applicationDbContext)
@@ -14,6 +15,7 @@ public class UnitOfWork : IUnitOfWork
         _applicationDbContext = applicationDbContext;
         Users = new UserRepository(applicationDbContext);
         Posts = new PostRepository(applicationDbContext);
+        Replies = new ReplyRepository(applicationDbContext);
     }
 
     public bool Complete()
