@@ -1,5 +1,9 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using ProjetDotNet.Data;
+using ProjetDotNet.Data.Context;
+using ProjetDotNet.Data.Repository;
+using ProjetDotNet.Models;
 using System.Threading.Tasks;
 
 namespace ProjetDotNet.Middlewares
@@ -23,13 +27,26 @@ namespace ProjetDotNet.Middlewares
         {
             var path = httpContext.Request.Path;
             if(!path.HasValue) return _next(httpContext);
-            Console.WriteLine("Executing auth middleware with route: " + path.Value);
             if (!AuthRoutes.Contains(path.Value)) return _next(httpContext);
 
-            if (httpContext.Session.GetString("username") == null)
+            Console.WriteLine("Executing auth middleware with route: " + path.Value);
+            string? uid = httpContext.Session.GetString("userid");
+            if (uid == null)
             {
-                httpContext.Response.Redirect("/login/index");
+                httpContext.Response.Redirect("/login");
+                return _next(httpContext);
             }
+
+            UserRepository userRepository = new UserRepository(AppDbContext.Instance);
+            User? user = userRepository.FindById(int.Parse(uid));
+            if(user == null)
+            {
+                httpContext.Session.Remove("userid");
+                httpContext.Response.Redirect("/login");
+                return _next(httpContext);
+            }
+
+            httpContext.Items["user"] = user;
             return _next(httpContext);
         }
     }

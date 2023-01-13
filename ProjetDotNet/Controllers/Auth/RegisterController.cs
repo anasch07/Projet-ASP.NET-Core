@@ -1,12 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ProjetDotNet.Data;
+using ProjetDotNet.Data.Context;
+using ProjetDotNet.Models;
 
 namespace ProjetDotNet.Controllers.Auth
 {
     [Route("register")]
     public class RegisterController : Controller
     {
+        [HttpGet]
         [Route("")]
-        [Route("index")]
         public IActionResult Index()
         {
             return View();
@@ -14,16 +17,19 @@ namespace ProjetDotNet.Controllers.Auth
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Route("process")]
-        public IActionResult Process(object user)
+        [Route("")]
+        public IActionResult Process(User user)
         {
-            if (!Helper.Helper.IsUserInfoValid(user))
+            if (!Helper.ValidationHelper.IsUserInfoValid(user))
             {
                 ViewBag.error = "Invalid login.";
-                return RedirectToAction("Index");
+                return View("index");
             }
 
-            return RedirectToAction("Index", "Login");
+            UnitOfWork unitOfWork = new UnitOfWork(AppDbContext.Instance);
+            unitOfWork.Users.Add(user);
+
+            return RedirectToAction("", "Login");
         }
     }
 }
