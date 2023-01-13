@@ -10,6 +10,9 @@ public class AppDbContext : DbContext
 
     private static AppDbContext? _instance;
     public DbSet<User>? User { get; set; }
+    public DbSet<Post>? Post { get; set; }
+    public DbSet<Reply>? Reply { get; set; }
+    
     public static AppDbContext Instance
     {
         get

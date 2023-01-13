@@ -11,9 +11,12 @@ public class Reply
     [Required]
     public Post Post { get; set; }
     [Required]
-    public User User { get; set; }
+    public User Author { get; set; }
     [Required]
     public DateTime Date { get; set; }
+    [Required]
+    public Boolean IsAccepted { get; set; }
+    
     
     
 }

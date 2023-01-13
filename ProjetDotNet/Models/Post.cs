@@ -13,7 +13,7 @@ public class Post
     [Required]
     public User Author { get; set; }
     [Required]
-    public string Date { get; set; }
+    public DateTime Date { get; set; }
     
     
 

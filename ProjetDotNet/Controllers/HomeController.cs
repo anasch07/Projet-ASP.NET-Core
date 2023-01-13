@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProjetDotNet.Models;
 using System.Diagnostics;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using ProjetDotNet.Data;
 using Microsoft.EntityFrameworkCore.Query;
+using Microsoft.EntityFrameworkCore.Storage;
 
 
 namespace ProjetDotNet.Controllers
@@ -21,18 +23,31 @@ namespace ProjetDotNet.Controllers
 
             AppDbContext appDbContext = AppDbContext.Instance;
             Console.WriteLine("AppDbContext instantiated in HomeController");
-
             
-            //create a new user
             User user = new User();
-
-            user.Email = "aa@cc.cc";
-            user.Name= "aa";
-            user.Password = "aa";
+            user.Name = "Mongi";
+            user.Email = "Mongi@Mongi.cc";
+            user.Password = "a*a*";
+            
+            Post post = new Post();
+            post.Title = "My Second post";
+            post.Content = "This is my Second post";
+            post.Author = user;
+            post.Date = DateTime.Now;
+            
+            Reply reply = new Reply();
+            reply.Content = "This is my Second reply";
+            reply.Author = user;
+            reply.Date = DateTime.Now;
+            reply.Post = post;
+            reply.IsAccepted = true;
             
             
             
-            
+            appDbContext.User.Add(user);
+            appDbContext.Post.Add(post);
+            appDbContext.Reply.Add(reply);
+            appDbContext.SaveChanges();
 
 
 
