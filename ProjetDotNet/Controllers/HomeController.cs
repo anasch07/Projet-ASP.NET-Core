@@ -21,7 +21,7 @@ namespace ProjetDotNet.Controllers
         public IActionResult Index()
         {
 
-            AppDbContext appDbContext = AppDbContext.Instance;
+            /*AppDbContext appDbContext = AppDbContext.Instance;
             Console.WriteLine("AppDbContext instantiated in HomeController");
             
             User user = new User();
@@ -47,10 +47,7 @@ namespace ProjetDotNet.Controllers
             appDbContext.User.Add(user);
             appDbContext.Post.Add(post);
             appDbContext.Reply.Add(reply);
-            appDbContext.SaveChanges();
-
-
-
+            appDbContext.SaveChanges();*/
             return View();
         }
 

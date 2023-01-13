@@ -1,6 +1,36 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@model ProjetDotNet.Models.User
+
+
+<h3>Login Page</h3>
+@ViewBag.error
+@using (Html.BeginForm("process", "register", FormMethod.Post))
+{
+    <table cellpadding="2" cellspacing="2">
+        <tr>
+            <td>Nom</td>
+            <td>
+                @Html.TextBoxFor(m => m.Name)
+            </td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>
+                @Html.TextBoxFor(m => m.Email)
+            </td>
+        </tr>
+        <tr>
+            <td>Password</td>
+            <td>
+                @Html.TextBoxFor(m => m.Password)
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td>
+                <input type="submit" value="Register" />
+            </td>
+        </tr>
+        @Html.AntiForgeryToken()
+    </table>
 }
-Register
+
