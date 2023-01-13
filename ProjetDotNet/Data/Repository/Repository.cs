@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
 using ProjetDotNet.Data.Context;
+using ProjetDotNet.Models;
 
 namespace ProjetDotNet.Data.Repository
 {
@@ -28,10 +29,8 @@ namespace ProjetDotNet.Data.Repository
         {
             try
             {
-                _applicationDbContext.Set<TEntity>().Add(entity);
                 
-                Console.WriteLine("Entity added");
-                Console.WriteLine(entity.ToString());
+                _applicationDbContext.Set<TEntity>().Add(entity);
 
                 return true;
             }

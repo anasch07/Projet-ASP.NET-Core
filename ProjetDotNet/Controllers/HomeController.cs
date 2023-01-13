@@ -1,11 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ProjetDotNet.Models;
 using System.Diagnostics;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using ProjetDotNet.Data;
-using Microsoft.EntityFrameworkCore.Query;
-using Microsoft.EntityFrameworkCore.Storage;
 using ProjetDotNet.Data.Context;
+using ProjetDotNet.Models;
 
 
 namespace ProjetDotNet.Controllers
@@ -25,13 +21,25 @@ namespace ProjetDotNet.Controllers
             UnitOfWork unitOfWork = new UnitOfWork(AppDbContext.Instance);
             
             User user = new User();
-            user.Email = "oaoaoa@oaoaoa.oaoaoa";
-            user.Name = "oaoaoaoaoaoa";
+            user.Email = "paapap@oaoaoa.oaoaoa";
+            user.Name = "paapap";
             user.Password = "oaoaoa";
             
             unitOfWork.Users.Add(user);
+            unitOfWork.Complete();
 
 
+            // AppDbContext appDbContext = AppDbContext.Instance;
+            //
+            //
+            // User user = new User();
+            // user.Name = "wawawa";
+            // user.Email = "wawawa@wawawa.cc";
+            // user.Password = "wawawa";
+            //
+            // appDbContext.User.Add(user);
+            // appDbContext.SaveChanges();
+            
 
             return View();
         }
