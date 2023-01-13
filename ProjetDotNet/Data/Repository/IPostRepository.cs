@@ -2,9 +2,9 @@
 
 namespace ProjetDotNet.Data.Repository{
 
-public interface IPostRepository : IRepository<Post>
+    public interface IPostRepository : IRepository<Post>
 
-{
+    {
 
-}
+    }
 }

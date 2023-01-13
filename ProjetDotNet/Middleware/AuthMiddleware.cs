@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using ProjetDotNet.Data;
+using ProjetDotNet.Data.Context;
+using ProjetDotNet.Data.Repository;
 using ProjetDotNet.Models;
 using System.Threading.Tasks;
 
@@ -35,7 +37,8 @@ namespace ProjetDotNet.Middlewares
                 return _next(httpContext);
             }
 
-            User? user = UserRepository.FindById(int.Parse(uid));
+            UserRepository userRepository = new UserRepository(AppDbContext.Instance);
+            User? user = userRepository.FindById(int.Parse(uid));
             if(user == null)
             {
                 httpContext.Session.Remove("userid");

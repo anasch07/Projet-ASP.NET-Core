@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProjetDotNet.Data;
+using ProjetDotNet.Data.Context;
+using ProjetDotNet.Data.Repository;
 using ProjetDotNet.Models;
 
 namespace ProjetDotNet.Controllers.Auth
@@ -19,7 +21,9 @@ namespace ProjetDotNet.Controllers.Auth
         [Route("")]
         public IActionResult Process(string? email, string? password)
         {
-            User? user = UserRepository.FindByCreds(email, password);
+            UserRepository userRepository = new UserRepository(AppDbContext.Instance);
+            User? user = userRepository.FindByCreds(email, password);
+
             if (user == null)
             {
                 ViewBag.error = "Invalid login.";

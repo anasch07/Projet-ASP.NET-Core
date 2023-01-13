@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProjetDotNet.Data;
+using ProjetDotNet.Data.Context;
 using ProjetDotNet.Models;
 
 namespace ProjetDotNet.Controllers.Auth
@@ -25,7 +26,9 @@ namespace ProjetDotNet.Controllers.Auth
                 return View("index");
             }
 
-            UserRepository.CreateUser(user);
+            UnitOfWork unitOfWork = new UnitOfWork(AppDbContext.Instance);
+            unitOfWork.Users.Add(user);
+
             return RedirectToAction("", "Login");
         }
     }

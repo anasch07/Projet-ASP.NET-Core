@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
 using ProjetDotNet.Models;
 
 
@@ -32,8 +34,18 @@ namespace ProjetDotNet.Data.Context
         {
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
             optionsBuilder.UseSqlite(@"Data Source=ProjetDotNet.db");
+            var instance = new AppDbContext(optionsBuilder.Options);
 
-            return new AppDbContext(optionsBuilder.Options);
+            try
+            {
+                RelationalDatabaseCreator dbCreator = (RelationalDatabaseCreator)instance.GetService<IDatabaseCreator>();
+                dbCreator.CreateTables();
+            }
+            catch (Exception e)
+            {
+
+            }
+            return instance;
         }
     }
 }
