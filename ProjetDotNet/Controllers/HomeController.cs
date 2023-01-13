@@ -19,8 +19,8 @@ namespace ProjetDotNet.Controllers
         public IActionResult Index()
         {
 
-            AppDbContext appDbContext = AppDbContext.Instantiate_AppDbContext();
-            Console.WriteLine("AppDbContext instantiated {0}  times", AppDbContext.count);
+            AppDbContext appDbContext = AppDbContext.Instance;
+            Console.WriteLine("AppDbContext instantiated in HomeController");
 
             
             //create a new user
@@ -30,9 +30,8 @@ namespace ProjetDotNet.Controllers
             user.Name= "aa";
             user.Password = "aa";
             
-            //add the user to the database
-            appDbContext.Users.Add(user);
-            appDbContext.SaveChanges();
+            
+            
             
 
 
