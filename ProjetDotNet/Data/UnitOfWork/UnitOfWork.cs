@@ -9,7 +9,6 @@ public class UnitOfWork : IUnitOfWork
     public IPostRepository Posts { get; private set; }
     public IReplyRepository Replies { get; private set; }
 
-
     public UnitOfWork(AppDbContext applicationDbContext)
     {
         _applicationDbContext = applicationDbContext;
