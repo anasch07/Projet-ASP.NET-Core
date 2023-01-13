@@ -7,10 +7,11 @@ using ProjetDotNet.Models;
 
 namespace ProjetDotNet.Controllers.Auth
 {
-    [Route("login")]
+    [Route("auth")]
     public class LoginController : Controller
     {
-        [Route("")]
+        [HttpGet]
+        [Route("login")]
         public IActionResult Index()
         {
             return View();
@@ -18,7 +19,7 @@ namespace ProjetDotNet.Controllers.Auth
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Route("")]
+        [Route("login")]
         public IActionResult Process(string? email, string? password)
         {
             UserRepository userRepository = new UserRepository(AppDbContext.Instance);
@@ -32,6 +33,15 @@ namespace ProjetDotNet.Controllers.Auth
 
             HttpContext.Session.SetString("userid", user.Id.ToString());
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        [Route("logout")]
+        public IActionResult logout()
+        {
+            HttpContext.Session.Clear();
+            Response.Cookies.Delete(".AspNetCore.Session");
+            return RedirectToAction("login", "auth");
         }
     }
 }

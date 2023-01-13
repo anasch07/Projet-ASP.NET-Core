@@ -32,7 +32,7 @@ namespace ProjetDotNet.Middlewares
             string? uid = httpContext.Session.GetString("userid");
             if (uid == null)
             {
-                httpContext.Response.Redirect("/login");
+                httpContext.Response.Redirect("/auth/login");
                 return _next(httpContext);
             }
 
@@ -41,7 +41,7 @@ namespace ProjetDotNet.Middlewares
             if(user == null)
             {
                 httpContext.Session.Remove("userid");
-                httpContext.Response.Redirect("/login");
+                httpContext.Response.Redirect("/auth/login");
                 return _next(httpContext);
             }
 
