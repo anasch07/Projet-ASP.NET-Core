@@ -60,7 +60,26 @@ namespace ProjetDotNet.Controllers
 
             UnitOfWork unitOfWork2 = new UnitOfWork(AppDbContext.Instance);
 
-            return View("Post/Index", unitOfWork2.Posts.Get(1)!);
+            return View("Index", unitOfWork2.Posts.Get(1)!);
         }
+        
+        public IActionResult CreatePost(Post post)
+        {
+            User user = (User)HttpContext.Items["user"]!;
+            if (HttpContext.Request.Method == "POST")
+            {
+                UnitOfWork unitOfWork = new UnitOfWork(AppDbContext.Instance);
+                post.Author = user;
+                post.Date = DateTime.Now;
+                unitOfWork.Posts.Add(post);
+                unitOfWork.Complete();
+                return RedirectToAction("index", new { id=post.Id } );
+            }
+            
+            return RedirectToAction("Index","Home" );
+        }
+        
+        
+        
     }
 }

@@ -30,7 +30,7 @@ namespace ProjetDotNet.Controllers.Auth
             unitOfWork.Users.Add(user);
             unitOfWork.Complete();
 
-            return RedirectToAction("", "Login");
+            return RedirectToAction("login", "auth");
         }
     }
 }

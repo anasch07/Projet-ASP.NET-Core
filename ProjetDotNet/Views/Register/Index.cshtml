@@ -2,7 +2,7 @@
 
 
 
-@ViewBag.error
+
 @using (Html.BeginForm("process", "register", FormMethod.Post))
 {
   <section class="vh-100" style="background-color: #ffffff;">
@@ -55,7 +55,15 @@
                   <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                  <button type="submit" class="btn btn-success">Register</button>
                   </div>
-
+                   
+                       @if (ViewData["error"] != null)
+                       {
+                         <div class="alert alert-danger" role="alert">
+                           @ViewData["error"]
+                         </div>
+                         
+                           }
+                           
                 </div>
 
               </div>
