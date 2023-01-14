@@ -35,17 +35,7 @@
                     <div class="vr"></div>
                     <div class="flex-grow-1 h6 font-monospace">@Model.Content</div>
                 </div>
-
-                <h6>
-                    Author:
-                    <a href="/user?id=@Model.Author?.Id " class="w-auto">
-                        @Model.Author?.Name
-                    </a>
-                </h6>
                 
-                <p class="h5 font-weight-light text-dark text-opacity-75 pb-5">
-                    @Model.Content
-                </p>
                 <a  class="w-auto"
                 asp-controller="Post"
                  asp-action="GetMyPosts"
