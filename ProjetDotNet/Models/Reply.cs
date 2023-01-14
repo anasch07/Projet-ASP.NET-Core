@@ -23,7 +23,10 @@ public class Reply
     [Required]
     [DefaultValue(0)]
     public Boolean IsAccepted { get; set; }
-    
-    
-    
+
+    [Required]
+    [DefaultValue(0)]
+    public int Upvotes { get; set; }
+
+
 }

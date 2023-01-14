@@ -2,6 +2,7 @@
 using ProjetDotNet.Data.Context;
 using ProjetDotNet.Models;
 using System.Linq.Expressions;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace ProjetDotNet.Data.Repository
 {
@@ -19,6 +20,18 @@ namespace ProjetDotNet.Data.Repository
         {
             IEnumerable<Post> posts = _applicationDbContext.Post.Where(x => x.Author.Id == userId);
             return posts;
+        }
+        public void upvotePost(int postId, bool isUp) 
+        {
+            Post post = _applicationDbContext.Post.Find(postId);
+            if (isUp)
+            {
+                post.Upvotes += 1;
+            }
+            else
+            {
+                post.Upvotes -= 1;
+            }
         }
     }
 }

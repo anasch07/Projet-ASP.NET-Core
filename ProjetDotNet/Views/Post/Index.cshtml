@@ -8,11 +8,41 @@
     <div class="col">
 	    @if (Model != null)
         {
-            <div class="col mt-4">
+            <div class="col mt-4 container">
                 <h3>
                     Q: @Model.Title
                 </h3>
                 <hr/>
+                <div class="d-flex flex-row gap-2 p-2">
+                    <div class="ml-2 text-center d-flex flex-column mr-2 align-self-center w-auto flex-shrink-1">
+                        @{
+                            string clr = "";
+                            clr = (Model.Upvotes > 0 ? "text-success" : Model.Upvotes < 0 ? "text-danger" : "");
+                        }
+                        <a asp-controller="Post" asp-action="upvotePost" asp-route-postId="@Model.Id" asp-route-isPositive="@true"
+                               type="button"
+                               class="btn-toolbar btn btn-sm  w-auto h6 text-success">
+                            ▲
+                        </a>
+                        <h5 class="opacity-50 @clr">@Model.Upvotes</h5>
+
+                        <a asp-controller="Post" asp-action="upvotePost" asp-route-postId="@Model.Id" asp-route-isPositive="@false"
+                               type="button"
+                               class="btn btn-toolbar btn-sm  w-auto h6 text-danger">
+                            ▼
+                        </a>
+                    </div>
+                    <div class="vr"></div>
+                    <div class="flex-grow-1 h6 font-monospace">@Model.Content</div>
+                </div>
+
+                <h6>
+                    Author:
+                    <a href="/user?id=@Model.Author?.Id " class="w-auto">
+                        @Model.Author?.Name
+                    </a>
+                </h6>
+                
                 <p class="h5 font-weight-light text-dark text-opacity-75 pb-5">
                     @Model.Content
                 </p>
@@ -26,11 +56,11 @@
                 <h6 class="h6 opacity-50">
 					Date: @Model.Date.ToShortDateString() @Model.Date.ToShortTimeString()
                 </h6>
-                <hr />
+                <hr/>
                 <h4 class="text-opacity-50 text-dark">
 					Answers: 
                 </h4>
-                <div>
+                <div class="p-3 pb-0 mb-1">
                     <h6 class="opacity-50">
                         Post a reply:
                     </h6>
@@ -49,24 +79,34 @@
                 </div>
                 @if( ViewData["replies"] != null)
                 {
-                    <div class="col d-flex flex-column gap-3">
-                    @{
-                        IEnumerable<Reply> replies = (IEnumerable<Reply>)ViewData["replies"]!;
-                        replies = replies?.OrderByDescending(reply => reply.Date)!; 
-                    }
+                    <div class="col d-flex flex-column p-3 gap-3">
+                        @{
+                            IEnumerable<Reply> replies = (IEnumerable<Reply>)ViewData["replies"]!;
+                            replies = replies?.OrderByDescending(reply => reply.Date)!;
+                            replies = replies?.OrderByDescending(reply => reply.Upvotes)!;
+                        }
                     @foreach(Reply reply in replies!)
                     {
-                        <div class="d-flex flex-row gap-2 border p-2">
+                            string clor = "";
+                            clor = (reply.Upvotes > 0 ? "text-success" : reply.Upvotes < 0 ? "text-danger" : "");
 
-                            <div class="ml-2 d-flex flex-column mr-2 align-self-center">
-                                <button class="btn btn-light btn-sm btn-outline-success w-auto h6">
-                                    ▲
-                                </button>
-                                <button class="btn btn-light btn-sm btn-outline-danger w-auto h6">
-                                    ▼
-                                </button>
+                            <div class="d-flex flex-row gap-2 border p-2">
+
+                            <div class="ml-2 d-flex flex-column text-center mr-2 align-self-center">
+                                    <a asp-controller="Reply" asp-action="upvoteReply" asp-route-replyId="@reply.Id" asp-route-postId="@Model.Id" asp-route-isPositive="@true"
+                                    type="button"
+                                    class="btn-toolbar btn btn-sm  w-auto h6 text-success" >
+                                        ▲
+                                </a>
+                                    <h5 class="opacity-50 @clor">@reply.Upvotes</h5>
+
+                                    <a asp-controller="Reply" asp-action="upvoteReply" asp-route-replyId="@reply.Id" asp-route-postId="@Model.Id" asp-route-isPositive="@false"
+                                        type="button"
+                                        class="btn btn-toolbar btn-sm  w-auto h6 text-danger">
+                                            ▼
+                                    </a>
                             </div>
-                            <div class="vr"></div>
+                            <div class=""></div>
                             <div class="col flex-grow-1">
                                 <p class="h5 opacity-75  font-weight-light text-dark text-opacity-80 ">
                                     @reply.Content

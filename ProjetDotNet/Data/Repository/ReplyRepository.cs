@@ -25,6 +25,19 @@ namespace ProjetDotNet.Data.Repository
             Reply reply = _applicationDbContext.Reply.Find(id);
             reply.IsAccepted = false;
         }
+
+        public void upvoteReply(int id, bool upvote)
+        {
+            Reply reply = _applicationDbContext.Reply.Find(id);
+            if (upvote)
+            {
+                reply.Upvotes += 1;
+            }
+            else
+            {
+                reply.Upvotes -= 1;
+            }
+        }
         
     }
 }

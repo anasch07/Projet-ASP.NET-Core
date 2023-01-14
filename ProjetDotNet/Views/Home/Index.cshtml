@@ -15,13 +15,23 @@
             <div class="col-md-4">
                 <div class="card d-flex flex-row gap-1 p-2 mb-3 ">
 
-                    <div class="ml-2 d-flex flex-column mr-2 align-self-center">
-                        <button class="btn btn-light btn-sm btn-outline-success w-auto h6">
+                    <div class="ml-2 d-flex text-center flex-column mr-2 align-self-center">
+                        @{
+                            string clr = "";
+                            clr = (post.Upvotes > 0 ? "text-success" : post.Upvotes < 0 ? "text-danger" : "");
+                        }
+                        <a asp-controller="Post" asp-action="upvotePost" asp-route-postId="@post.Id" asp-route-isPositive="@true"
+                       type="button"
+                       class="btn-toolbar btn btn-sm  w-auto h6 text-success">
                             ▲
-                        </button>
-                        <button class="btn btn-light btn-sm btn-outline-danger w-auto h6">
+                        </a>
+                        <h5 class="opacity-50 @clr">@post.Upvotes</h5>
+
+                        <a asp-controller="Post" asp-action="upvotePost" asp-route-postId="@post.Id" asp-route-isPositive="@false"
+                       type="button"
+                       class="btn btn-toolbar btn-sm  w-auto h6 text-danger">
                             ▼
-                        </button>
+                        </a>
                     </div>
                     <div class="vr"></div>
                     <div class="col flex-grow-1 d-flex flex-column"  >

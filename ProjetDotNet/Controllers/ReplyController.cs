@@ -50,6 +50,16 @@ namespace ProjetDotNet.Controllers
             unitOfWork.Complete();
             return RedirectToAction("Index", "Post", new { id = postId });
         }
+
+        [Route ("upvoteReply")]
+        public IActionResult upvoteReply(int replyId, bool isPositive, int postId)
+        {
+            UnitOfWork unitOfWork =new UnitOfWork(AppDbContext.Instance);
+            unitOfWork.Replies.upvoteReply(replyId, isPositive);
+            Console.WriteLine(postId.ToString() , ' ' , isPositive);
+            unitOfWork.Complete();
+            return RedirectToAction("Index", "Post", new { id = postId });
+        }
         
         
     }

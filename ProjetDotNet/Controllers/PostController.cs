@@ -100,5 +100,14 @@ namespace ProjetDotNet.Controllers
             unitOfWork.Complete();
             return RedirectToAction("GetMyPosts");
         }
+
+        [Route("upvotePost")]
+        public IActionResult upvoteReply(bool isPositive, int postId)
+        {
+            UnitOfWork unitOfWork = new UnitOfWork(AppDbContext.Instance);
+            unitOfWork.Posts.upvotePost(postId, isPositive);
+            unitOfWork.Complete();
+            return RedirectToAction("Index", "Post", new { id = postId });
+        }
     }
 }

@@ -7,5 +7,6 @@ namespace ProjetDotNet.Data.Repository{
     {
         public new IEnumerable<Post> GetAll();
         public new IEnumerable<Post> GetPostsByAuthor(int id);
+        public void upvotePost(int id, bool isUp);
     }
 }
