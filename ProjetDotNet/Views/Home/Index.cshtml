@@ -4,21 +4,39 @@
     ViewData["Title"] = "Home Page";
 }
 
-
-    <div class="row">
-       
-        @foreach (Post post in Model)
+    <p class="h3 text-dark opacity-75 mb-5">Here are the latest questions:</p>
+    <div class=" row">
+    @{
+        IEnumerable<Post> postDesc = Model;
+        postDesc = postDesc.OrderByDescending(p => p.Date);
+    }
+    @foreach (Post post in postDesc)
         {
             <div class="col-md-4">
-                <div class="card m-1">
-                    <div class="card-body">
-                        <h5 class="card-title">@post.Title</h5>
-                        <p class="card-text">@post.Content</p>
-                        <a asp-controller="Post" asp-action="Index" asp-route-id="@post.Id" class="btn btn-secondary small">View</a>
+                <div class="card d-flex flex-row gap-1 p-2 mb-3 ">
+
+                    <div class="ml-2 d-flex flex-column mr-2 align-self-center">
+                        <button class="btn btn-light btn-sm btn-outline-success w-auto h6">
+                            ▲
+                        </button>
+                        <button class="btn btn-light btn-sm btn-outline-danger w-auto h6">
+                            ▼
+                        </button>
+                    </div>
+                    <div class="vr"></div>
+                    <div class="col flex-grow-1 d-flex flex-column"  >
+                        <a href ="/post?id=@post.Id" class="h5 opacity-75 font-weight-light text-dark text-opacity-80 ">
+                            @post.Title
+                        </a>
+                    <p>@post.Content.Substring(0, post.Content.Length>80?80:post.Content.Length) </p>
+                        @*author name here*@
+                        <a href="/user?id=@post.Author.Id " class="w-auto">
+                            <h6>@post.Author.Name</h6>
+                        </a>
+                        <h6 class="opacity-50">@post.Date.ToShortDateString() @post.Date.ToShortTimeString() </h6>
                     </div>
                 </div>
-            </div>
-           
+		    </div>
         }
     </div>
 
