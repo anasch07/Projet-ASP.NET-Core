@@ -1,0 +1,32 @@
+﻿@page
+@model ProjetDotNet.Views.Post.getMyPosts
+
+
+
+
+<div>
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">@ViewBag.User.Name</h1>
+            <p class="lead">@ViewBag.User.Email</p>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+       
+    @foreach (Post post in @ViewBag.Posts)
+    {
+        <div class="col-md-4">
+            <div class="card m-1">
+                <div class="card-body">
+                    <h5 class="card-title">@post.Title</h5>
+                    <p class="card-text">@post.Content</p>
+                    <a asp-controller="Post" asp-action="Index" asp-route-id="@post.Id" class="btn btn-secondary small">View</a>
+                </div>
+            </div>
+        </div>
+           
+    }
+</div>

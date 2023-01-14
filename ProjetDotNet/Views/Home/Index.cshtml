@@ -1,19 +1,24 @@
-﻿@model IEnumerable<ProjetDotNet.Models.Post>
+﻿@using Microsoft.EntityFrameworkCore.Internal
+@model IEnumerable<ProjetDotNet.Models.Post>
 @{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="container">
-    @foreach (Post post in Model)
-    {
-        <div class="row">
-            @post.Title
-        </div>
-        <div class="row">
-            @post.Content
-        </div>
-        <div class="row">
-            @post.Author
-        </div>
-    }
-</div>
+
+    <div class="row">
+       
+        @foreach (Post post in Model)
+        {
+            <div class="col-md-4">
+                <div class="card m-1">
+                    <div class="card-body">
+                        <h5 class="card-title">@post.Title</h5>
+                        <p class="card-text">@post.Content</p>
+                        <a asp-controller="Post" asp-action="Index" asp-route-id="@post.Id" class="btn btn-secondary small">View</a>
+                    </div>
+                </div>
+            </div>
+           
+        }
+    </div>
+

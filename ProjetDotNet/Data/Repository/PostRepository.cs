@@ -14,5 +14,11 @@ namespace ProjetDotNet.Data.Repository
         {
             return _applicationDbContext.Post.Include(x => x.Author).ToList();
         }
+        
+        public IEnumerable<Post>? GetPostsByAuthor(int userId)
+        {
+            IEnumerable<Post> posts = _applicationDbContext.Post.Where(x => x.Author.Id == userId);
+            return posts;
+        }
     }
 }

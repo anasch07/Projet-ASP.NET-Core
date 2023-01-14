@@ -58,5 +58,40 @@ namespace ProjetDotNet.Controllers
             return RedirectToAction("index", new { id=postId } );
             
         }
+        
+        
+        [Route ("create")]
+        public IActionResult CreatePost(Post post)
+        {
+            User user = (User)HttpContext.Items["user"]!;
+            if (HttpContext.Request.Method == "POST")
+            {
+                UnitOfWork unitOfWork = new UnitOfWork(AppDbContext.Instance);
+                post.Author = user;
+                post.Date = DateTime.Now;
+                unitOfWork.Posts.Add(post);
+                unitOfWork.Complete();
+                return RedirectToAction("index", new { id=post.Id } );
+            }
+
+            return View();
+        }
+        
+        [Route ("getMyPosts")]
+        public IActionResult GetMyPosts()
+        {
+            User user = (User)HttpContext.Items["user"]!;
+            Console.WriteLine(user.Id);
+            UnitOfWork unitOfWork = new UnitOfWork(AppDbContext.Instance);
+            IEnumerable<Post> posts = unitOfWork.Posts.GetPostsByAuthor(user.Id);
+            
+            ViewBag.posts = posts;
+            ViewBag.user = user;
+            
+            return View();
+        }
+        
+        
+        
     }
 }
