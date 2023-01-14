@@ -4,6 +4,7 @@ using ProjetDotNet.Data;
 using ProjetDotNet.Data.Context;
 using ProjetDotNet.Data.Repository;
 using ProjetDotNet.Models;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace ProjetDotNet.Middlewares
@@ -16,6 +17,7 @@ namespace ProjetDotNet.Middlewares
             "/auth/process",
             "/auth/logout",
             "/auth/login",
+            "/register",
         };
 
         public AuthMiddleware(RequestDelegate next)
@@ -35,23 +37,22 @@ namespace ProjetDotNet.Middlewares
             Console.WriteLine(uid);
             if (uid == null)
             {
-                Console.WriteLine("Redirect");
+                Console.WriteLine("Redirect 1");
                 httpContext.Response.Redirect("/auth/login");
-                return _next(httpContext);
+                return httpContext.Response.CompleteAsync();
             }
 
             UserRepository userRepository = new UserRepository(AppDbContext.Instance);
             User? user = userRepository.FindById(int.Parse(uid));
             if(user == null)
             {
-                Console.WriteLine("Redirect");
+                Console.WriteLine("Redirect 2");
                 httpContext.Session.Remove("userid");
                 httpContext.Response.Redirect("/auth/login");
-                return _next(httpContext);
+                return httpContext.Response.CompleteAsync();
             }
 
             httpContext.Items["user"] = user;
-            
             return _next(httpContext);
         }
     }

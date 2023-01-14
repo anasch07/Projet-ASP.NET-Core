@@ -64,6 +64,7 @@ namespace ProjetDotNet.Controllers
         public IActionResult CreatePost(Post post)
         {
             User user = (User)HttpContext.Items["user"]!;
+            Console.WriteLine("Exec!");
             if (HttpContext.Request.Method == "POST")
             {
                 UnitOfWork unitOfWork = new UnitOfWork(AppDbContext.Instance);
@@ -77,11 +78,11 @@ namespace ProjetDotNet.Controllers
             return View();
         }
         
-        [Route ("getMyPosts")]
+        [Route ("GetMyPosts")]
+        [HttpGet]
         public IActionResult GetMyPosts()
         {
             User user = (User)HttpContext.Items["user"]!;
-            Console.WriteLine(user.Id);
             UnitOfWork unitOfWork = new UnitOfWork(AppDbContext.Instance);
             IEnumerable<Post> posts = unitOfWork.Posts.GetPostsByAuthor(user.Id);
             
