@@ -13,7 +13,7 @@ namespace ProjetDotNet.Data.Context
 
         private static AppDbContext? _instance;
         public DbSet<User>? User { get; set; }
-        public static DbSet<Post>? Post { get; set; }
+        public DbSet<Post>? Post { get; set; }
         public DbSet<Reply>? Reply { get; set; }
 
         public static AppDbContext Instance

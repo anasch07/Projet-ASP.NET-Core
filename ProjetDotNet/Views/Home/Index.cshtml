@@ -1,8 +1,19 @@
-﻿@{
+﻿@model IEnumerable<ProjetDotNet.Models.Post>
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">Gl3 Poject</a>.</p>
+<div class="container">
+    @foreach (Post post in Model)
+    {
+        <div class="row">
+            @post.Title
+        </div>
+        <div class="row">
+            @post.Content
+        </div>
+        <div class="row">
+            @post.Author
+        </div>
+    }
 </div>

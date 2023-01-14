@@ -21,14 +21,10 @@ namespace ProjetDotNet.Controllers
 
         public IActionResult Index()
         {
-
-            return View();
+            UnitOfWork unitOfWork = new UnitOfWork(AppDbContext.Instance);
+            IEnumerable<Post> res = unitOfWork.Posts.GetAll();
+            return View(res);
         }
-
-       
-        
-        
-        
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
