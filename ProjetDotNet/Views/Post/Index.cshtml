@@ -31,7 +31,7 @@
                         Post a reply:
                     </h6>
                     @*form*@
-                    @using (Html.BeginForm("CreateReply", "post", FormMethod.Post))
+                    @using (Html.BeginForm("CreateReply", "reply", FormMethod.Post))
                     {
                         <div class="d-flex flex-column gap-2 mb-5">
                             <textarea class="form-control" name="content"></textarea>
