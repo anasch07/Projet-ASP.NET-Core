@@ -20,21 +20,20 @@
             </button>
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
+                       @if (Context.Items["user"] != null){
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Posts</a>
                     </li>
 
-                    
-                    
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area=""
-                        asp-controller="post" asp-action="create">Create Post</a>
-                                            </li>
-                    
+                           asp-controller="post" asp-action="CreatePost">Create Post</a>
+                    </li>
+
                     <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller='Post' asp-action="GetMyPosts">My Posts</a>
-                        </li>
-                    
+                        <a class="nav-link text-dark" asp-area="" asp-controller='Post' asp-action="GetMyPosts">My Posts</a>
+                    </li>
+                       }
 
 
                 </ul>
@@ -52,7 +51,8 @@
                         <div>
                             Welcome @(((ProjetDotNet.Models.User) Context.Items["user"]!).Name)!
                         </div>
-                    }
+                        // logout button
+                         <a class="btn btn-outline-danger my-2 my-sm-0 m-2" asp-controller="Login" asp-action="logout">Logout</a>        }
 
             </div>
 

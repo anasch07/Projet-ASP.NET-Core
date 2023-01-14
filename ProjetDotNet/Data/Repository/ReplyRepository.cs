@@ -14,5 +14,17 @@ namespace ProjetDotNet.Data.Repository
             IEnumerable<Reply> replies = _applicationDbContext.Reply.Include(x => x.Author).Where(x => x.Post.Id == id);
             return replies;
         }
+        
+        public void AcceptReply(int id)
+        {
+            Reply reply = _applicationDbContext.Reply.Find(id);
+            reply.IsAccepted = true;
+        }
+        public void refuseReply(int id)
+        {
+            Reply reply = _applicationDbContext.Reply.Find(id);
+            reply.IsAccepted = false;
+        }
+        
     }
 }
