@@ -14,8 +14,9 @@ namespace ProjetDotNet.Middlewares
         private readonly RequestDelegate _next;
         private readonly string[] AuthRoutes = { 
             "/post/create",
-            "/post/reply",
-            "/post/"
+            "/reply/create",
+            "/post?id=1",
+            "/post"
         };
 
         public AuthMiddleware(RequestDelegate next)
@@ -26,6 +27,7 @@ namespace ProjetDotNet.Middlewares
         public Task Invoke(HttpContext httpContext)
         {
             var path = httpContext.Request.Path;
+            Console.WriteLine(path.Value);
             if(!path.HasValue) return _next(httpContext);
             if (!AuthRoutes.Contains(path.Value)) return _next(httpContext);
 
@@ -33,7 +35,7 @@ namespace ProjetDotNet.Middlewares
             string? uid = httpContext.Session.GetString("userid");
             if (uid == null)
             {
-                httpContext.Response.Redirect("/login");
+                httpContext.Response.Redirect("/auth/login");
                 return _next(httpContext);
             }
 
@@ -42,7 +44,7 @@ namespace ProjetDotNet.Middlewares
             if(user == null)
             {
                 httpContext.Session.Remove("userid");
-                httpContext.Response.Redirect("/login");
+                httpContext.Response.Redirect("/auth/login");
                 return _next(httpContext);
             }
 

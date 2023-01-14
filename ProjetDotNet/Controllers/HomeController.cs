@@ -18,6 +18,7 @@ namespace ProjetDotNet.Controllers
         public IActionResult Index()
         {
 
+<<<<<<< HEAD
             UnitOfWork unitOfWork = new UnitOfWork(AppDbContext.Instance);
             
             // User user1 = new User();
@@ -107,6 +108,8 @@ namespace ProjetDotNet.Controllers
 
 
 
+=======
+>>>>>>> origin/main
             return View();
         }
 
