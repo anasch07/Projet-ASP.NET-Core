@@ -33,6 +33,7 @@ namespace ProjetDotNet.Controllers
             ViewData["replies"] = replies;
             return View(post);
         }
+
         [HttpPost]
         public IActionResult CreateReply(int postId, string content)
         {

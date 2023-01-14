@@ -10,7 +10,6 @@
 </head>
 
 <body>
-
 <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
         <div class="container-fluid">
@@ -29,7 +28,7 @@
                     
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area=""
-                        asp-controller="Post" asp-action="CreatePost">Create Post</a>
+                        asp-controller="post" asp-action="create">Create Post</a>
                                             </li>
                     
                     <li class="nav-item">
@@ -39,13 +38,22 @@
 
 
                 </ul>
-                <form class="form-inline my-2 my-lg-0">
-                   
-                        <button class="btn btn-outline-success my-2 my-sm-0" asp-controller="Login" asp-action="Index">Login</button>
-                        <button class="btn btn-outline-success my-2 my-sm-0" asp-controller="Register" asp-action="Index">Register</button>
-                    
+                    @if (Context.Items["user"] == null)
+                    {
+                        <form class="form-inline my-2 my-lg-0">
 
-                </form>
+                            <button class="btn btn-outline-success my-2 my-sm-0" asp-controller="Login" asp-action="Index">Login</button>
+                            <button class="btn btn-outline-success my-2 my-sm-0" asp-controller="Register" asp-action="Index">Register</button>
+
+
+                        </form>
+                    }
+                    else{
+                        <div>
+                            Welcome @(((ProjetDotNet.Models.User) Context.Items["user"]!).Name)!
+                        </div>
+                    }
+
             </div>
 
 

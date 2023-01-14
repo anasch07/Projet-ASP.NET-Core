@@ -12,11 +12,10 @@ namespace ProjetDotNet.Middlewares
     public class AuthMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly string[] AuthRoutes = { 
-            "/post/create",
-            "/reply/create",
-            "/post?id=1",
-            "/post"
+        private readonly string[] NoAuthRoutes = { 
+            "/auth/process",
+            "/auth/logout",
+            "/auth/login",
         };
 
         public AuthMiddleware(RequestDelegate next)
@@ -29,12 +28,14 @@ namespace ProjetDotNet.Middlewares
             var path = httpContext.Request.Path;
             Console.WriteLine(path.Value);
             if(!path.HasValue) return _next(httpContext);
-            if (!AuthRoutes.Contains(path.Value)) return _next(httpContext);
+            if (NoAuthRoutes.Contains(path.Value)) return _next(httpContext);
 
             Console.WriteLine("Executing auth middleware with route: " + path.Value);
             string? uid = httpContext.Session.GetString("userid");
+            Console.WriteLine(uid);
             if (uid == null)
             {
+                Console.WriteLine("Redirect");
                 httpContext.Response.Redirect("/auth/login");
                 return _next(httpContext);
             }
@@ -43,12 +44,14 @@ namespace ProjetDotNet.Middlewares
             User? user = userRepository.FindById(int.Parse(uid));
             if(user == null)
             {
+                Console.WriteLine("Redirect");
                 httpContext.Session.Remove("userid");
                 httpContext.Response.Redirect("/auth/login");
                 return _next(httpContext);
             }
 
             httpContext.Items["user"] = user;
+            
             return _next(httpContext);
         }
     }
