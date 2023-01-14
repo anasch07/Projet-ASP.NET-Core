@@ -38,7 +38,7 @@ namespace ProjetDotNet.Controllers
         public IActionResult CreateReply(int postId, string content)
         {
             User user = (User)HttpContext.Items["user"]!;
-            
+
             UnitOfWork unitOfWork = new UnitOfWork(AppDbContext.Instance);
             Post? post = unitOfWork.Posts.Get(postId);
             if (post == null || content == null)
@@ -55,12 +55,12 @@ namespace ProjetDotNet.Controllers
 
             unitOfWork.Replies.Add(reply);
             unitOfWork.Complete();
-            return RedirectToAction("index", new { id=postId } );
-            
+            return RedirectToAction("index", new { id = postId });
+
         }
-        
-        
-        [Route ("create")]
+
+
+        [Route("create")]
         public IActionResult CreatePost(Post post)
         {
             User user = (User)HttpContext.Items["user"]!;
@@ -72,27 +72,55 @@ namespace ProjetDotNet.Controllers
                 post.Date = DateTime.Now;
                 unitOfWork.Posts.Add(post);
                 unitOfWork.Complete();
-                return RedirectToAction("index", new { id=post.Id } );
+                return RedirectToAction("index", new { id = post.Id });
             }
 
             return View();
         }
-        
-        [Route ("GetMyPosts")]
+
+        [Route("GetMyPosts")]
         [HttpGet]
         public IActionResult GetMyPosts()
         {
             User user = (User)HttpContext.Items["user"]!;
             UnitOfWork unitOfWork = new UnitOfWork(AppDbContext.Instance);
             IEnumerable<Post> posts = unitOfWork.Posts.GetPostsByAuthor(user.Id);
-            
+
             ViewBag.posts = posts;
             ViewBag.user = user;
-            
+
             return View();
         }
-        
-        
-        
+
+        [Route("delete")]
+        [HttpGet]
+        public IActionResult DeletePost(int id)
+        {
+            User user = (User)HttpContext.Items["user"]!;
+            UnitOfWork unitOfWork = new UnitOfWork(AppDbContext.Instance);
+
+            Post? post = unitOfWork.Posts.Get(id);
+            if (post == null)
+            {
+                ViewData["ErrorMsg"] = "Invalid post id!";
+                return View("Error");
+            }
+
+            if (post.Author.Id != user.Id)
+            {
+                ViewData["ErrorMsg"] = "You can't delete this post!";
+                return View("Error");
+            }
+
+            IEnumerable<Reply> replies = unitOfWork.Replies.GetByPostId(post.Id) ?? new List<Reply>();
+
+            unitOfWork.Posts.Remove(post);
+            foreach(Reply reply in replies)
+            {
+                unitOfWork.Replies.Remove(reply);
+            }
+            unitOfWork.Complete();
+            return RedirectToAction("GetMyPosts");
+        }
     }
 }
