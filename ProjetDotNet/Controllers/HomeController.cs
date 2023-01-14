@@ -1,11 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ProjetDotNet.Models;
 using System.Diagnostics;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using ProjetDotNet.Data;
-using Microsoft.EntityFrameworkCore.Query;
-using Microsoft.EntityFrameworkCore.Storage;
 using ProjetDotNet.Data.Context;
+using ProjetDotNet.Models;
 
 
 namespace ProjetDotNet.Controllers
