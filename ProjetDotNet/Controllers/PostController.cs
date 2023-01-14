@@ -63,6 +63,8 @@ namespace ProjetDotNet.Controllers
             return View("Index", unitOfWork2.Posts.Get(1)!);
         }
         
+        
+        [Route ("create")]
         public IActionResult CreatePost(Post post)
         {
             User user = (User)HttpContext.Items["user"]!;
@@ -75,8 +77,8 @@ namespace ProjetDotNet.Controllers
                 unitOfWork.Complete();
                 return RedirectToAction("index", new { id=post.Id } );
             }
-            
-            return RedirectToAction("Index","Home" );
+
+            return View();
         }
         
         
