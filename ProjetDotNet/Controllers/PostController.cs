@@ -37,51 +37,25 @@ namespace ProjetDotNet.Controllers
         public IActionResult CreateReply(int postId, string content)
         {
             User user = (User)HttpContext.Items["user"]!;
-            if (HttpContext.Request.Method == "POST")
+            
+            UnitOfWork unitOfWork = new UnitOfWork(AppDbContext.Instance);
+            Post? post = unitOfWork.Posts.Get(postId);
+            if (post == null || content == null)
             {
-                UnitOfWork unitOfWork = new UnitOfWork(AppDbContext.Instance);
-                Post? post = unitOfWork.Posts.Get(postId);
-                if (post == null || content == null)
-                {
-                    return BadRequest();
-                }
-
-                Reply reply = new Reply();
-                Console.WriteLine(post.Id + ' ' + user.Id);
-                reply.Post = post;
-                reply.Author = user;
-                reply.Content = content;
-                reply.Date = DateTime.Now;
-
-                unitOfWork.Replies.Add(reply);
-                unitOfWork.Complete();
-                return RedirectToAction("index", new { id=postId } );
+                return BadRequest();
             }
 
-            UnitOfWork unitOfWork2 = new UnitOfWork(AppDbContext.Instance);
+            Reply reply = new Reply();
+            Console.WriteLine(post.Id + ' ' + user.Id);
+            reply.Post = post;
+            reply.Author = user;
+            reply.Content = content;
+            reply.Date = DateTime.Now;
 
-            return View("Index", unitOfWork2.Posts.Get(1)!);
+            unitOfWork.Replies.Add(reply);
+            unitOfWork.Complete();
+            return RedirectToAction("index", new { id=postId } );
+            
         }
-        
-        
-        [Route ("create")]
-        public IActionResult CreatePost(Post post)
-        {
-            User user = (User)HttpContext.Items["user"]!;
-            if (HttpContext.Request.Method == "POST")
-            {
-                UnitOfWork unitOfWork = new UnitOfWork(AppDbContext.Instance);
-                post.Author = user;
-                post.Date = DateTime.Now;
-                unitOfWork.Posts.Add(post);
-                unitOfWork.Complete();
-                return RedirectToAction("index", new { id=post.Id } );
-            }
-
-            return View();
-        }
-        
-        
-        
     }
 }
