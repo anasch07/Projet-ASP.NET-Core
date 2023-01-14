@@ -15,6 +15,12 @@ namespace ProjetDotNet.Data.Repository
             return _applicationDbContext.User.Find(id);
         }
 
+        public User? FindByEmail(string? email)
+        {
+            List<User> users = _applicationDbContext.User.Where(x => x.Email == email).ToList();
+            return users.Count == 0 ? null : users[0];
+        }
+
         public User? FindByCreds(string? email, string? password)
         {
             if (email == null) return null;

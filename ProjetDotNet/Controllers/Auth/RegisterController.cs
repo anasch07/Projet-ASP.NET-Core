@@ -27,6 +27,12 @@ namespace ProjetDotNet.Controllers.Auth
             }
 
             UnitOfWork unitOfWork = new UnitOfWork(AppDbContext.Instance);
+            if(unitOfWork.Users.FindByEmail(user.Email) != null)
+            {
+                ViewData["ErrorMsg"] = "Email already in use!";
+                return View("Error");
+            }
+
             unitOfWork.Users.Add(user);
             unitOfWork.Complete();
 
