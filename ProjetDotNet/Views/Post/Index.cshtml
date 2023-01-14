@@ -16,7 +16,11 @@
                 <p class="h5 font-weight-light text-dark text-opacity-75 pb-5">
                     @Model.Content
                 </p>
-                <a href="/user?id=@Model.Author?.Id " class="w-auto">
+                <a  class="w-auto"
+                asp-controller="Post"
+                 asp-action="GetMyPosts"
+                 asp-route-userId="@Model.Author.Id">
+                    
                     <h6>@Model.Author?.Name</h6>
                 </a>
                 <h6 class="h6 opacity-50">
@@ -68,7 +72,11 @@
                                     @reply.Content
                                 </p>
                                 @*author name here*@
-                                <a href="/user?id=@reply.Author.Id " class="w-auto">
+                                <a class="w-auto"
+                                   asp-controller="Post"
+                                   asp-action="GetMyPosts"
+                                   asp-route-userId="@reply.Author.Id">
+                                    
                                     <h6>@reply.Author.Name</h6>
                                 </a>
                                 <h6 class="opacity-50">@reply.Date.ToShortDateString() @reply.Date.ToShortTimeString() </h6>
