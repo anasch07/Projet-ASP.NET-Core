@@ -31,7 +31,11 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller='Post' asp-action="GetMyPosts">My Posts</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller='Post' 
+                            asp-controller="Post"
+                            asp-action="GetMyPosts"
+                            asp-route-userId="@(((ProjetDotNet.Models.User) Context.Items["user"]!).Id)">My Posts</a>
+                        
                     </li>
                        }
 

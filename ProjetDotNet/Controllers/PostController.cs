@@ -54,14 +54,18 @@ namespace ProjetDotNet.Controllers
 
         [Route("GetMyPosts")]
         [HttpGet]
-        public IActionResult GetMyPosts()
+        public IActionResult GetMyPosts(int userId)
         {
-            User user = (User)HttpContext.Items["user"]!;
+        
             UnitOfWork unitOfWork = new UnitOfWork(AppDbContext.Instance);
-            IEnumerable<Post> posts = unitOfWork.Posts.GetPostsByAuthor(user.Id);
-
+            IEnumerable<Post> posts = unitOfWork.Posts.GetPostsByAuthor(userId);
+            
+            Console.WriteLine("---------------------");
+            Console.WriteLine(userId);
+            Console.WriteLine("---------------------");
+            
             ViewBag.posts = posts;
-            ViewBag.user = user;
+            ViewBag.user = unitOfWork.Users.Get(userId);
 
             return View();
         }

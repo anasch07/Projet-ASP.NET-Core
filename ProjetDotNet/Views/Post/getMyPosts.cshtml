@@ -24,7 +24,11 @@
                     <h5 class="card-title">@post.Title</h5>
                     <p class="card-text">@post.Content</p>
                     <a asp-controller="Post" asp-action="Index" asp-route-id="@post.Id" class="btn btn-secondary small">View</a>
-                    <a asp-controller="Post" asp-action="DeletePost" asp-route-id="@post.Id" class="btn btn-danger small">Delete</a>
+                    @* if logged user is the owner of the post *@
+                    @if(post.Author.Id == ((ProjetDotNet.Models.User) Context.Items["user"]!).Id)
+                    {
+                        <a asp-controller="Post" asp-action="DeletePost" asp-route-id="@post.Id" class="btn btn-danger small">Delete</a>
+                    }
                 </div>
             </div>
         </div>

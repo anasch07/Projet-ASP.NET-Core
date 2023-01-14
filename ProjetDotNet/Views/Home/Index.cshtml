@@ -30,8 +30,11 @@
                         </a>
                     <p>@post.Content.Substring(0, post.Content.Length>80?80:post.Content.Length) </p>
                         @*author name here*@
-                        <a href="/user?id=@post.Author.Id " class="w-auto">
-                            <h6>@post.Author.Name</h6>
+                        <a class="w-auto"
+                           asp-controller="Post"
+                           asp-action="GetMyPosts"
+                           asp-route-userId="@post.Author.Id">
+                            @post.Author.Name
                         </a>
                         <h6 class="opacity-50">@post.Date.ToShortDateString() @post.Date.ToShortTimeString() </h6>
                     </div>
