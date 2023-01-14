@@ -22,12 +22,13 @@ namespace ProjetDotNet.Controllers.Auth
         {
             if (!Helper.ValidationHelper.IsUserInfoValid(user))
             {
-                ViewBag.error = "Invalid login.";
+                ViewBag.error = "Invalid Registration Check Your Data   .";
                 return View("index");
             }
 
             UnitOfWork unitOfWork = new UnitOfWork(AppDbContext.Instance);
             unitOfWork.Users.Add(user);
+            unitOfWork.Complete();
 
             return RedirectToAction("", "Login");
         }
