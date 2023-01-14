@@ -1,0 +1,28 @@
+﻿@model ProjetDotNet.Models.Post
+
+@using (Html.BeginForm("CreatePost", "Post", FormMethod.Post))
+{
+
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">Post Your Question </h1>
+            <p class="lead">Don't be shy we all have been there.</p>
+        </div>
+    </div>
+    
+    <div class="form-group m-1">
+        <label for="Title">Title</label>
+        @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+    </div>
+    
+    <div class="form-group m-1">
+        <label for="Content">Content</label>
+        @Html.TextAreaFor(m => m.Content, new { @class = "form-control" })
+    </div>
+    
+    <button type="submit" class="btn btn-primary m-2">Submit</button>
+                                                 
+                                                 
+    
+    
+    }
