@@ -15,6 +15,8 @@ namespace ProjetDotNet.Middlewares
         private readonly string[] AuthRoutes = { 
             "/post/create",
             "/reply/create",
+            "/post?id=1",
+            "/post"
         };
 
         public AuthMiddleware(RequestDelegate next)
@@ -25,6 +27,7 @@ namespace ProjetDotNet.Middlewares
         public Task Invoke(HttpContext httpContext)
         {
             var path = httpContext.Request.Path;
+            Console.WriteLine(path.Value);
             if(!path.HasValue) return _next(httpContext);
             if (!AuthRoutes.Contains(path.Value)) return _next(httpContext);
 
